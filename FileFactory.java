@@ -1,6 +1,5 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileFactory {
@@ -38,6 +37,16 @@ public class FileFactory {
         } catch (IOException e) {
             System.err.println("Erro ao escrever resultados no arquivo " + nomeArquivo);
             e.printStackTrace();
+        }
+    }
+
+    public static String lerGabarito(String caminhoArquivo) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            return br.readLine().trim();
+        } catch (IOException e) {
+            System.err.println("Arquivo não encontrado!");
+            e.printStackTrace();
+            throw e;
         }
     }
 }

@@ -9,9 +9,8 @@ public class ResultProcessor {
         this.strategy = strategy;
     }
 
-    public void processarResultados(Disciplina disciplina) {
+    public void processarResultados(Disciplina disciplina, String gabarito) {
         List<String> respostas = disciplina.getRespostasAlunos();
-        String gabarito = disciplina.getGabarito();
         List<Aluno> resultados = new ArrayList<>();
 
         for (String resposta : respostas) {

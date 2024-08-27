@@ -1,9 +1,10 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Map<String, Disciplina> disciplinas = new HashMap<>();
 
@@ -100,12 +101,20 @@ public class Main {
                         continue;
                     }
 
-                    ResultProcessor processor = new ResultProcessor(new DefaultScoringStrategy());
-                    processor.processarResultados(disciplina);
+                    System.out.print("Informe o caminho do gabarito da disciplina: ");
+                    String gabaritoPath = scanner.nextLine().trim();
 
-                    System.out.println("Notas calculadas e arquivos gerados com sucesso:");
-                    System.out.println("- " + nomeDisciplina + "_resultados_alfabetica.txt");
-                    System.out.println("- " + nomeDisciplina + "_resultados_notas.txt");
+                    try {
+                        String gabaritoLido = FileFactory.lerGabarito(gabaritoPath);
+                        ResultProcessor processor = new ResultProcessor(new DefaultScoringStrategy());
+                        processor.processarResultados(disciplina, gabaritoLido);
+
+                        System.out.println("Notas calculadas e arquivos gerados com sucesso:");
+                        System.out.println("- " + nomeDisciplina + "_resultados_alfabetica.txt");
+                        System.out.println("- " + nomeDisciplina + "_resultados_notas.txt");
+                    } catch (IOException e) {
+                        System.out.println("Erro ao ler o gabarito.");
+                    }
                     break;
 
                 case "2":
